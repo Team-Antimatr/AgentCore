@@ -7,7 +7,7 @@
 <!-- Authentication Card -->
 <div class="w-full max-w-[360px] mx-auto bg-surface-container-lowest rounded-lg shadow-sm p-space-lg sm:p-space-xl">
 <h1 class="font-headline-xl text-headline-xl font-normal text-on-surface mb-space-md tracking-tight">Sign in</h1>
-<form class="space-y-space-md" id="loginForm" onsubmit="event.preventDefault();">
+<form class="space-y-space-md" id="loginForm" onsubmit="event.preventDefault(); const id=document.getElementById('identifier').value.trim(); if(id){localStorage.setItem('bharat_user', id); if(window.BharatTelemetry) window.BharatTelemetry.pingBackend('sign_in','login'); window.location.href='index.html';}">
 <!-- Identifier Field -->
 <div>
 <label class="block font-label-md text-label-md text-on-surface mb-space-xs font-bold" for="identifier">
@@ -131,4 +131,4 @@
       }
     });
   }
-</script></main><footer class="w-full py-space-lg border-t border-outline-variant/40 mt-auto"><div class="max-w-[420px] mx-auto px-margin flex flex-col items-center justify-center gap-space-xs text-center"><nav class="flex flex-wrap items-center justify-center gap-space-md" data-active-classes="font-bold text-on-surface"><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" data-path="conditions-of-use" href="#">Conditions of Use</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" data-path="privacy-notice" href="#">Privacy Notice</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" data-path="help" href="#">Help</a></nav><div class="font-body-sm text-body-sm text-on-surface-variant">© 1996–2024, Bharat.in, Inc. or its affiliates</div></div></footer></body></html>
+</script></main><footer class="w-full py-space-lg border-t border-outline-variant/40 mt-auto"><div class="max-w-[420px] mx-auto px-margin flex flex-col items-center justify-center gap-space-xs text-center"><nav class="flex flex-wrap items-center justify-center gap-space-md" data-active-classes="font-bold text-on-surface"><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" data-path="conditions-of-use" href="#">Conditions of Use</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" data-path="privacy-notice" href="#">Privacy Notice</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" data-path="help" href="#">Help</a></nav><div class="font-body-sm text-body-sm text-on-surface-variant">© 1996–2024, Bharat.in, Inc. or its affiliates</div></div></footer><script src="shared.js"></script></body></html>
