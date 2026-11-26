@@ -417,17 +417,26 @@
       thinkingEl.className = "flex items-start gap-3 max-w-2xl";
       thinkingEl.innerHTML = `
         <div class="w-7 h-7 rounded-lg bg-[#1E1E1E] border border-zinc-800 flex items-center justify-center text-[#9D179E] text-xs font-bold shrink-0">A</div>
-        <div class="px-3.5 py-2 rounded-xl bg-[#1A1A1A] border border-zinc-800 text-xs text-zinc-400">Processing request...</div>`;
+        <div class="px-3.5 py-2 rounded-xl bg-[#1A1A1A] border border-zinc-800 text-xs text-zinc-300 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-[#FF9900] animate-pulse shrink-0"></span>
+          <span class="loading-reason">Checking Layer 1 Guardrail &amp; sending to Render...</span>
+        </div>`;
       box.appendChild(thinkingEl);
       box.scrollTop = box.scrollHeight;
 
+      const reasonSpan = thinkingEl.querySelector(".loading-reason");
+      const t1 = setTimeout(() => { if (reasonSpan) reasonSpan.textContent = "Calling Amazon Bedrock (Claude Haiku 4.5 + Guardrail 1z48cdo2pkw8)..."; }, 700);
+      const t2 = setTimeout(() => { if (reasonSpan) reasonSpan.textContent = "Executing scoped cloud tool &amp; Layer 3 policy check..."; }, 2200);
+
       try {
         const data = await callAgent(clean);
+        clearTimeout(t1); clearTimeout(t2);
         thinkingEl.remove();
         session.messages.push({ role: "agent", text: data.answer, status: data.status, trace: data.trace || [] });
         saveSessions();
         appendChatBubble("agent", data.answer, data.status, data.trace || []);
       } catch (err) {
+        clearTimeout(t1); clearTimeout(t2);
         thinkingEl.remove();
         const msg = `Error reaching Render backend: ${err.message}`;
         session.messages.push({ role: "agent", text: msg, status: "BLOCKED", trace: [] });
@@ -485,24 +494,27 @@
 
       const spinnerFrames = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
       let frameIdx = 0;
+      let cliReason = "Checking Layer 1 Guardrail & sending to Render...";
       const loadingP = document.createElement("p");
       loadingP.className = "text-[#FF9900]";
-      loadingP.textContent = `>>>>> [Agent] : Processing... ${spinnerFrames[0]}`;
+      loadingP.textContent = `>>>>> [Agent] : ${cliReason} ${spinnerFrames[0]}`;
       cliOutput.appendChild(loadingP);
       cliOutput.scrollTop = cliOutput.scrollHeight;
+      const c1 = setTimeout(() => { cliReason = "Calling Amazon Bedrock (Claude Haiku 4.5 + Guardrail)..."; }, 700);
+      const c2 = setTimeout(() => { cliReason = "Executing scoped tool & Layer 3 policy check..."; }, 2200);
       const spinTimer = setInterval(() => {
         frameIdx = (frameIdx + 1) % spinnerFrames.length;
-        loadingP.textContent = `>>>>> [Agent] : Processing... ${spinnerFrames[frameIdx]}`;
+        loadingP.textContent = `>>>>> [Agent] : ${cliReason} ${spinnerFrames[frameIdx]}`;
       }, 90);
 
       try {
         const data = await callAgent(cmd);
-        clearInterval(spinTimer);
+        clearTimeout(c1); clearTimeout(c2); clearInterval(spinTimer);
         loadingP.remove();
         const color = data.status === "ALLOWED" ? "text-emerald-400" : data.status === "ESCALATED" ? "text-amber-400" : "text-red-400";
         appendCliLine(`&gt;&gt;&gt;&gt;&gt; <span class="text-[#FF9900]">[Agent]</span> <span class="${color}">[${data.status}]</span> : ${escapeHtml(data.answer)}`);
       } catch (err) {
-        clearInterval(spinTimer);
+        clearTimeout(c1); clearTimeout(c2); clearInterval(spinTimer);
         loadingP.remove();
         appendCliLine(`&gt;&gt;&gt;&gt;&gt; <span class="text-red-400">[ERROR]</span> : ${escapeHtml(err.message)}`);
       }
