@@ -43,6 +43,13 @@ _PII_EXFIL_PATTERNS = [
     r"contact\s+email\s+(address|id)?",
     r"email\s+address(es)?",
     r"list\s+.*\b(phones?|emails?|contacts?)\b",
+    r"(exact\s+people|exact\s+consumer|special\s+hash\s+id|hash\s+id|user\s+hash)",
+]
+
+_AVAILABILITY_SABOTAGE_PATTERNS = [
+    r"spinning\s+(mode|instance)",
+    r"increase\s+spinning",
+    r"hang\s+(the\s+)?server",
 ]
 
 _IAM_TAMPER_PATTERNS = [
@@ -105,8 +112,15 @@ def check_input(prompt: str) -> GuardrailResult:
         return GuardrailResult(
             False,
             "PII_EXFILTRATION",
-            "Blocked attempt to extract customer PII (mobile numbers, email addresses, or personal contact details). "
+            "Blocked attempt to extract customer PII (mobile numbers, email addresses, or user hash IDs). "
             "Only anonymized aggregate counts are permitted.",
+        )
+
+    if _matches_any(prompt, _AVAILABILITY_SABOTAGE_PATTERNS):
+        return GuardrailResult(
+            False,
+            "AVAILABILITY_SABOTAGE",
+            "Blocked attempt to put user-facing servers into spinning/degraded mode or artificially delay auth.",
         )
 
     if _matches_any(prompt, _IAM_TAMPER_PATTERNS):
