@@ -208,6 +208,15 @@ class CloudTools:
         return ToolResult("ALLOWED", "\n".join(lines), "Read-only anonymized DB analytics (PII excluded).")
 
     @staticmethod
+    def manage_finops_controls(action: str) -> ToolResult:
+        """Manage billing alerts or spend caps (disabling/removing is blocked by Layer 3 policy)."""
+        return ToolResult(
+            "BLOCKED",
+            f"Layer 3 Policy violation: '{action}' is forbidden. Billing alerts and hourly spend caps are immutable.",
+            "Hard-coded FinOps spend-cap protection.",
+        )
+
+    @staticmethod
     def block_destructive_action(action_desc: str) -> ToolResult:
         """Deterministic block for destructive database/cluster/billing mutations."""
         reason = (
