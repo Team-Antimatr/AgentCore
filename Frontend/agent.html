@@ -306,7 +306,12 @@
 
     // ==================== PERSISTENT CHAT HISTORY ====================
     let sessions = loadSessions();
-    let activeSessionId = sessions[0]?.id || createNewSession(false);
+    let activeSessionId = null;
+    if (sessions.length > 0) {
+      activeSessionId = sessions[0].id;
+    } else {
+      createNewSession(false);
+    }
 
     function loadSessions() {
       try {
