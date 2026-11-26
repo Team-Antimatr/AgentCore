@@ -19,11 +19,7 @@
   <!-- Mobile Top Bar -->
   <header class="md:hidden flex items-center justify-between px-4 py-3 bg-black border-b border-zinc-900">
     <div class="flex items-center gap-2">
-      <svg class="w-9 h-6" viewBox="0 0 64 40" fill="none">
-        <text x="6" y="22" fill="#FFFFFF" font-family="Inter, sans-serif" font-weight="700" font-size="20">aws</text>
-        <path d="M8 27C18 35 38 35 50 26" stroke="#9D179E" stroke-width="3" stroke-linecap="round"/>
-        <path d="M46 24L52 25.5L49 31" stroke="#9D179E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <img src="assets/aws-sidebar.png" alt="AWS" class="h-6 w-auto object-contain" />
       <span class="text-sm font-semibold text-zinc-200">Agent Core</span>
     </div>
     <button id="mobileMenuBtn" class="px-3 py-1.5 rounded-lg bg-zinc-900 text-zinc-200 text-xs border border-zinc-800">Menu</button>
@@ -32,13 +28,9 @@
   <!-- Left Primary Sidebar (Figma 605:36 & 607:432) -->
   <aside id="leftSidebar" class="hidden md:flex md:w-56 flex-col justify-between bg-black px-4 py-6 shrink-0 z-30 fixed md:static inset-y-0 left-0 border-r border-zinc-900 md:border-r-0">
     <div>
-      <!-- AWS Logo with Purple Smile -->
+      <!-- AWS Logo (from image 3.png) -->
       <div class="px-3 mb-12 flex items-center justify-between">
-        <svg class="w-14 h-9" viewBox="0 0 72 44" fill="none" aria-label="AWS">
-          <text x="4" y="24" fill="#FFFFFF" font-family="Inter, sans-serif" font-weight="700" font-size="24" letter-spacing="-0.5">aws</text>
-          <path d="M6 30C18 39 42 39 56 29" stroke="#9D179E" stroke-width="3" stroke-linecap="round"/>
-          <path d="M51 27L57.5 28.5L54.5 34.5" stroke="#9D179E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <img src="assets/aws-sidebar.png" alt="AWS" class="h-9 w-auto object-contain" />
         <button id="closeMobileMenu" class="md:hidden text-zinc-400 hover:text-white text-sm">✕</button>
       </div>
 
@@ -151,9 +143,9 @@
     <section id="tab-agent-cli" class="tab-panel hidden flex-1 flex-col gap-3 overflow-hidden font-mono-cli">
       <!-- Outer White-Bordered Terminal Box -->
       <div id="cliOutput" class="flex-1 bg-black border border-zinc-300/80 rounded-2xl p-5 sm:p-7 overflow-y-auto text-xs sm:text-sm space-y-2">
-        <!-- Pixel-Art AWS Cloud Logo (from image 2.png) -->
+        <!-- Purple AWS Cloud Logo (from image 4.png) -->
         <div class="mb-4">
-          <img src="assets/aws-logo.png" alt="AWS Cloud Logo" class="h-11 w-auto object-contain" />
+          <img src="assets/aws-cli-cloud.png" alt="AWS Cloud Logo" class="h-11 w-auto object-contain" />
         </div>
 
         <p class="text-zinc-200">&gt;&gt;&gt;&gt;&gt; Consumer Commerce Cloud Agent is Here ! What request i assist to you ?</p>
