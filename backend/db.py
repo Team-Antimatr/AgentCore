@@ -122,3 +122,80 @@ def fetch_db_summary() -> dict:
                 cur.execute(f"SELECT COUNT(*) FROM {table}")
                 counts[table] = cur.fetchone()[0]
             return {"connected": True, "tables": counts, "total_rows": sum(counts.values())}
+
+
+_CITY_REGION = {
+    "Delhi": "North", "Jaipur": "North",
+    "Mumbai": "West", "Pune": "West", "Ahmedabad": "West", "Indore": "Central",
+    "Bengaluru": "South", "Hyderabad": "South", "Chennai": "South",
+    "Kolkata": "East",
+}
+
+
+def fetch_shop_analytics(
+    group_by: str = "summary",
+    name_starts_with: str | None = None,
+    name_ends_with: str | None = None,
+) -> dict:
+    """Return safe, aggregated, non-PII Bharat.in analytics from Neon PostgreSQL."""
+    with get_conn() as conn:
+        if conn is None:
+            return {"connected": False, "error": "DATABASE_URL not configured"}
+        with conn.cursor() as cur:
+            cur.execute("SELECT COUNT(*) FROM shop_users")
+            total_users = cur.fetchone()[0]
+            cur.execute("SELECT COUNT(*) FROM shop_orders")
+            total_orders = cur.fetchone()[0]
+            cur.execute("SELECT COUNT(*) FROM shop_products")
+            total_products = cur.fetchone()[0]
+
+            result: dict = {
+                "connected": True,
+                "total_users": total_users,
+                "total_orders": total_orders,
+                "total_products": total_products,
+            }
+
+            if group_by == "city":
+                cur.execute("SELECT city, COUNT(*) FROM shop_users GROUP BY city ORDER BY COUNT(*) DESC")
+                result["users_by_city"] = {row[0]: row[1] for row in cur.fetchall()}
+                cur.execute(
+                    "SELECT u.city, COUNT(*) FROM shop_orders o JOIN shop_users u ON o.user_id = u.id "
+                    "GROUP BY u.city ORDER BY COUNT(*) DESC"
+                )
+                result["orders_by_city"] = {row[0]: row[1] for row in cur.fetchall()}
+
+            elif group_by == "region":
+                cur.execute("SELECT city, COUNT(*) FROM shop_users GROUP BY city")
+                reg_users: dict[str, int] = {}
+                for city, cnt in cur.fetchall():
+                    reg = _CITY_REGION.get(city, "Other")
+                    reg_users[reg] = reg_users.get(reg, 0) + cnt
+                result["users_by_region"] = reg_users
+
+                cur.execute(
+                    "SELECT u.city, COUNT(*) FROM shop_orders o JOIN shop_users u ON o.user_id = u.id GROUP BY u.city"
+                )
+                reg_orders: dict[str, int] = {}
+                for city, cnt in cur.fetchall():
+                    reg = _CITY_REGION.get(city, "Other")
+                    reg_orders[reg] = reg_orders.get(reg, 0) + cnt
+                result["orders_by_region"] = reg_orders
+
+            if name_starts_with or name_ends_with:
+                prefix = f"{name_starts_with or ''}%"
+                suffix = f"%{name_ends_with or ''}"
+                pattern = f"{name_starts_with or ''}%{name_ends_with or ''}"
+                cur.execute(
+                    "SELECT COUNT(DISTINCT u.id), COUNT(o.id) FROM shop_users u "
+                    "LEFT JOIN shop_orders o ON o.user_id = u.id WHERE u.name ILIKE %s",
+                    (pattern,),
+                )
+                matched_users, matched_orders = cur.fetchone()
+                result["name_filter"] = {
+                    "pattern": pattern,
+                    "matched_user_count": matched_users,
+                    "matched_order_count": matched_orders,
+                }
+
+            return result

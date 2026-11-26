@@ -167,6 +167,47 @@ class CloudTools:
         return ToolResult("ESCALATED", msg, "Policy requires human approval for GPU/high-cost resources.")
 
     @staticmethod
+    def get_shop_analytics(
+        group_by: str = "summary",
+        name_starts_with: str | None = None,
+        name_ends_with: str | None = None,
+    ) -> ToolResult:
+        """Return anonymized, aggregated Bharat.in user & order counts from Neon DB (no PII)."""
+        try:
+            from backend.db import fetch_shop_analytics
+
+            data = fetch_shop_analytics(
+                group_by=group_by,
+                name_starts_with=name_starts_with,
+                name_ends_with=name_ends_with,
+            )
+        except Exception as exc:
+            return ToolResult("ALLOWED", f"Analytics unavailable: {exc}", "Read-only aggregate query.")
+
+        if not data.get("connected"):
+            return ToolResult("ALLOWED", "Neon DB is not connected in this environment.", "Read-only aggregate query.")
+
+        lines = [
+            "Bharat.in Anonymized Platform Analytics (Zero PII):",
+            f"  - Total Registered Users: {data['total_users']}",
+            f"  - Total Products: {data['total_products']}",
+            f"  - Total Orders: {data['total_orders']}",
+        ]
+        if "users_by_city" in data:
+            lines.append("  - Users by City: " + ", ".join(f"{k}: {v}" for k, v in data["users_by_city"].items()))
+            lines.append("  - Orders by City: " + ", ".join(f"{k}: {v}" for k, v in data["orders_by_city"].items()))
+        if "users_by_region" in data:
+            lines.append("  - Users by Region: " + ", ".join(f"{k}: {v}" for k, v in data["users_by_region"].items()))
+            lines.append("  - Orders by Region: " + ", ".join(f"{k}: {v}" for k, v in data["orders_by_region"].items()))
+        if "name_filter" in data:
+            nf = data["name_filter"]
+            lines.append(
+                f"  - Aggregate Match ('{nf['pattern']}'): {nf['matched_user_count']} users, "
+                f"{nf['matched_order_count']} orders (names/emails/phones withheld)"
+            )
+        return ToolResult("ALLOWED", "\n".join(lines), "Read-only anonymized DB analytics (PII excluded).")
+
+    @staticmethod
     def block_destructive_action(action_desc: str) -> ToolResult:
         """Deterministic block for destructive database/cluster/billing mutations."""
         reason = (

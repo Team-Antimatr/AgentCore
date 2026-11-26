@@ -38,6 +38,13 @@ _SECRET_EXFIL_PATTERNS = [
     r"output\s+the\s+underlying\s+iam\s+policy",
 ]
 
+_PII_EXFIL_PATTERNS = [
+    r"(mobile|phone|contact)\s+numbers?",
+    r"contact\s+email\s+(address|id)?",
+    r"email\s+address(es)?",
+    r"list\s+.*\b(phones?|emails?|contacts?)\b",
+]
+
 _IAM_TAMPER_PATTERNS = [
     r"modify\s+(the\s+)?(agent'?s\s+)?iam\s+permissions?",
     r"grant\s+full\s+admin\s+write\s+access",
@@ -92,6 +99,14 @@ def check_input(prompt: str) -> GuardrailResult:
             False,
             "SECRET_EXFILTRATION",
             "Blocked attempt to export secrets, connection strings, .env data, or IAM policies.",
+        )
+
+    if _matches_any(prompt, _PII_EXFIL_PATTERNS):
+        return GuardrailResult(
+            False,
+            "PII_EXFILTRATION",
+            "Blocked attempt to extract customer PII (mobile numbers, email addresses, or personal contact details). "
+            "Only anonymized aggregate counts are permitted.",
         )
 
     if _matches_any(prompt, _IAM_TAMPER_PATTERNS):
