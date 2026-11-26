@@ -10,8 +10,10 @@ from pydantic import BaseModel, Field
 
 from agent_core import CloudGuardAgent
 from agent_core.config import load_dotenv
+from backend.db import ensure_tables, fetch_db_summary, record_audit, record_telemetry
 
 load_dotenv()
+ensure_tables()
 
 app = FastAPI(
     title="Consumer Commerce Cloud Guard API",
@@ -67,6 +69,7 @@ def agent_chat(req: ChatRequest) -> dict:
     if req.mode and req.mode != agent.mode:
         target_agent = CloudGuardAgent(state=agent.state, audit_logger=agent.audit, mode=req.mode)
     res = target_agent.handle(req.prompt)
+    record_audit(req.prompt, res.status, "bedrock_or_local", res.status, res.answer[:200])
     return {
         "status": res.status,
         "answer": res.answer,
@@ -113,6 +116,15 @@ def shop_telemetry_ping(req: ShopPingRequest) -> dict:
     _telemetry_hits += 1
     target = "prod-checkout-api-01" if "checkout" in req.page.lower() else "staging-api-server-01"
     srv = agent.state.servers.get(target)
+    cpu = 42.0
     if srv:
         srv.cpu_percent = round(min(92.0, srv.cpu_percent + 0.5), 1)
+        cpu = srv.cpu_percent
+    record_telemetry(target, req.page, req.action, cpu)
     return {"ok": True, "tracked_server": target, "telemetry_hits": _telemetry_hits}
+
+
+@app.get("/api/db/summary")
+def db_summary() -> dict:
+    """Return live Neon PostgreSQL row counts across shop & telemetry tables."""
+    return fetch_db_summary()
