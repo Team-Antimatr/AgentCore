@@ -299,6 +299,8 @@
         body: JSON.stringify({ prompt }),
       });
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      document.getElementById("statusDot").className = "w-2 h-2 rounded-full bg-emerald-400";
+      document.getElementById("statusText").textContent = "Render Online (bedrock)";
       return resp.json();
     }
 
@@ -507,15 +509,16 @@
     });
 
     // ==================== SETTINGS & LIVE TELEMETRY ====================
-    async function checkHealthWithRetry(retries = 2) {
+    async function checkHealthWithRetry(retries = 6) {
       for (let i = 0; i <= retries; i++) {
         try {
           const r = await fetch(`${BACKEND_URL}/health`, { cache: "no-store" });
           if (r.ok) return await r.json();
         } catch (_) {}
         if (i < retries) {
-          document.getElementById("statusText").textContent = "Waking Render...";
-          await new Promise((res) => setTimeout(res, 2500));
+          document.getElementById("statusDot").className = "w-2 h-2 rounded-full bg-amber-400 animate-pulse";
+          document.getElementById("statusText").textContent = `Waking Render (${i + 1}/${retries})...`;
+          await new Promise((res) => setTimeout(res, 3000));
         }
       }
       throw new Error("Health check failed");
