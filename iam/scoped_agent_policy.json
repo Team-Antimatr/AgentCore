@@ -1,0 +1,46 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowReadOnlyInfraAndFinOpsVisibility",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeInstances",
+        "ec2:DescribeVolumes",
+        "rds:DescribeDBInstances",
+        "cloudwatch:GetMetricStatistics",
+        "ce:GetCostAndUsage"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "AllowDevAndStagingLifecycleMutationsOnly",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:RebootInstances",
+        "ec2:RunInstances",
+        "ecs:UpdateService"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "aws:ResourceTag/Env": ["dev", "staging"]
+        }
+      }
+    },
+    {
+      "Sid": "ExplicitDenyProductionDestructionAndIAMTampering",
+      "Effect": "Deny",
+      "Action": [
+        "rds:DeleteDBInstance",
+        "rds:DeleteDBSnapshot",
+        "ec2:TerminateInstances",
+        "ec2:DeleteVolume",
+        "budgets:DeleteBudget",
+        "budgets:ModifyBudget",
+        "iam:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

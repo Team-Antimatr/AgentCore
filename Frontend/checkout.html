@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-surface-variant":"#45474b","on-secondary-fixed":"#101c2b","surface-container-low":"#f1f4f4","surface-container-lowest":"#ffffff","secondary-fixed-dim":"#bbc7db","on-background":"#181c1d","outline-variant":"#c5c6cb","surface-tint":"#595f68","error-container":"#ffdad6","on-error-container":"#93000a","on-surface":"#181c1d","secondary-container":"#d4e1f5","on-primary-fixed":"#161c24","error":"#ba1a1a","on-primary":"#ffffff","background":"#f7fafa","primary-container":"#161c24","secondary":"#535f70","tertiary-fixed-dim":"#e8c400","tertiary-container":"#c9a900","inverse-surface":"#2d3131","tertiary":"#6f5d00","on-primary-fixed-variant":"#414750","on-secondary-container":"#576474","outline":"#75777c","surface-container-high":"#e6e9e9","surface-container":"#ebeeee","secondary-fixed":"#d7e3f7","on-secondary-fixed-variant":"#3c4858","surface-dim":"#d7dbdb","on-secondary":"#ffffff","surface-variant":"#e0e3e3","on-tertiary-fixed":"#221b00","surface":"#f7fafa","surface-container-highest":"#e0e3e3","primary-fixed-dim":"#c1c7d2","tertiary-fixed":"#ffe16b","surface-bright":"#f7fafa","on-error":"#ffffff","inverse-on-surface":"#eef1f1","on-tertiary-fixed-variant":"#544600","primary":"#000000","on-tertiary":"#ffffff","on-primary-container":"#7e848e","on-tertiary-container":"#4c3f00","primary-fixed":"#dde3ee","inverse-primary":"#c1c7d2"},borderRadius:{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},spacing:{"space-xl":"1.5rem","gutter":"1rem","margin-mobile":"0.75rem","space-xs":"0.25rem","space-sm":"0.5rem","margin":"1.25rem","space-lg":"1rem","space-md":"0.75rem","gutter-mobile":"0.5rem"},fontFamily:{"label-sm":["Noto Sans"],"headline-xl":["Noto Sans"],"body-sm":["Noto Sans"],"headline-lg-mobile":["Noto Sans"],"headline-md":["Noto Sans"],"label-price-md":["Noto Sans"],"label-md":["Noto Sans"],"body-lg":["Noto Sans"],"headline-xl-mobile":["Noto Sans"],"headline-lg":["Noto Sans"],"body-md":["Noto Sans"],"label-price-lg":["Noto Sans"]},fontSize:{"label-sm":["11px",{"lineHeight":"14px","fontWeight":"500"}],"headline-xl":["28px",{"lineHeight":"36px","fontWeight":"700"}],"body-sm":["11px",{"lineHeight":"15px","fontWeight":"400"}],"headline-lg-mobile":["18px",{"lineHeight":"24px","fontWeight":"700"}],"headline-md":["16px",{"lineHeight":"22px","fontWeight":"700"}],"label-price-md":["18px",{"lineHeight":"22px","fontWeight":"700"}],"label-md":["13px",{"lineHeight":"16px","fontWeight":"600"}],"body-lg":["15px",{"lineHeight":"20px","fontWeight":"400"}],"headline-xl-mobile":["22px",{"lineHeight":"28px","fontWeight":"700"}],"headline-lg":["21px",{"lineHeight":"28px","fontWeight":"700"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"label-price-lg":["24px",{"lineHeight":"28px","fontWeight":"500"}]}}}};</script></head><body class="bg-surface font-body-md text-body-md text-on-surface"><header class="fixed top-0 left-0 w-full z-50 bg-primary-container shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full max-w-[1500px] mx-auto px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><a class="flex items-baseline text-on-primary font-headline-lg text-headline-lg tracking-tight" data-path="checkout" href="#"><span class="font-bold">Bharat</span><span class="text-tertiary-fixed font-bold text-headline-md font-headline-md">.in</span></a></div><div class="flex items-center justify-center gap-space-xs text-on-primary"><span class="material-symbols-outlined text-tertiary-fixed text-[20px]">lock</span><span class="font-headline-md text-headline-md tracking-tight uppercase text-on-primary">Checkout</span></div><div class="flex items-center gap-space-md"><div class="hidden sm:flex items-center gap-space-xs text-on-primary-container font-label-sm text-label-sm"><span class="material-symbols-outlined text-tertiary-fixed text-[18px]">verified_user</span><span class="tracking-wide uppercase font-label-md text-label-md text-on-primary">256-Bit SSL Secured</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface min-h-[calc(100vh-140px)]"><div class="flex flex-col w-full">
+<div class="w-full max-w-[1500px] mx-auto px-margin py-space-md sm:py-space-lg">
+<!-- Progress Indicator Bar (Utilitarian Minimalist) -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm mb-space-lg flex flex-wrap items-center justify-between gap-y-space-sm text-on-surface">
+<div class="flex items-center gap-space-sm">
+<span class="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-on-primary font-label-md text-label-md">1</span>
+<span class="font-headline-md text-headline-md tracking-tight">Delivery Address</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">chevron_right</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="flex items-center justify-center w-6 h-6 rounded-full bg-primary text-on-primary font-label-md text-label-md">2</span>
+<span class="font-headline-md text-headline-md tracking-tight">Payment Method</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">chevron_right</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="flex items-center justify-center w-6 h-6 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md">3</span>
+<span class="font-headline-md text-headline-md text-on-surface-variant tracking-tight">Items & Delivery</span>
+</div>
+<div class="hidden lg:flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm bg-surface-container-low px-space-md py-1 rounded-full">
+<span class="material-symbols-outlined text-[16px] text-tertiary">local_shipping</span>
+<span>Standard Express Fulfillment</span>
+</div>
+</div>
+<!-- Main Two-Column Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- LEFT COLUMN: Accordion Checkout Steps (8 Cols / approx 70%) -->
+<div class="lg:col-span-8 flex flex-col gap-space-lg">
+<!-- STEP 1: Delivery Address (Active / Expandable) -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden" id="step-address">
+<div class="bg-surface-container-low px-space-lg py-space-md flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-lg text-headline-lg text-primary">1</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Select a delivery address</h2>
+</div>
+<button class="font-body-md text-body-md text-secondary hover:text-on-surface underline" onclick="toggleAddressDetails()" type="button">Change</button>
+</div>
+<div class="p-space-lg flex flex-col gap-space-md">
+<!-- Selected Default Address Radio Card -->
+<label class="relative flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-low cursor-pointer transition-colors hover:bg-surface-container">
+<input checked="" class="mt-1 w-4 h-4 text-primary accent-primary" name="delivery_address" type="radio"/>
+<div class="flex-1 flex flex-col gap-0.5">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-headline-md text-headline-md text-on-surface">Rahul Sharma</span>
+<span class="bg-surface-container-highest text-on-surface px-2 py-0.5 rounded text-label-sm font-label-sm uppercase tracking-wider">Default</span>
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded text-label-sm font-label-sm">Home</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mt-1">
+                  Flat 402, Sai Krupa Residency, Navapur Road, Boisar (West), Palghar District
+                </p>
+<p class="font-body-md text-body-md text-on-surface">
+                  Boisar, MAHARASHTRA 401501
+                </p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                  Phone: <strong class="text-on-surface">+91 98765 43210</strong>
+</p>
+<div class="mt-2 flex items-center gap-space-md">
+<a class="font-body-sm text-body-sm text-secondary hover:underline" href="#">Edit address</a>
+<span class="text-outline-variant">•</span>
+<a class="font-body-sm text-body-sm text-secondary hover:underline" href="#">Add delivery instructions</a>
+</div>
+</div>
+</label>
+<!-- Secondary Alternate Address Card -->
+<label class="relative flex items-start gap-space-md p-space-md rounded-xl bg-surface cursor-pointer hover:bg-surface-container-low transition-colors">
+<input class="mt-1 w-4 h-4 text-primary accent-primary" name="delivery_address" type="radio"/>
+<div class="flex-1 flex flex-col gap-0.5">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-headline-md text-headline-md text-on-surface">Rahul Sharma</span>
+<span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded text-label-sm font-label-sm">Office</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface mt-1">
+                  Tech Hub 9th Floor, Platina Tower, Bandra Kurla Complex, Bandra East
+                </p>
+<p class="font-body-md text-body-md text-on-surface">
+                  Mumbai, MAHARASHTRA 400051
+                </p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                  Phone: <strong class="text-on-surface">+91 98765 43210</strong>
+</p>
+</div>
+</label>
+<!-- Confirm Button -->
+<div class="pt-space-xs">
+<button class="px-space-xl py-space-sm rounded-full font-label-md text-label-md bg-tertiary-fixed text-on-tertiary-fixed shadow-sm hover:bg-tertiary-fixed-dim transition-colors" type="button">
+                Use this address
+              </button>
+</div>
+<!-- Add Address Form Trigger & Container -->
+<div class="mt-space-sm bg-surface-container-low p-space-md rounded-xl">
+<button class="flex items-center gap-space-xs text-on-surface font-headline-md text-headline-md hover:text-tertiary transition-colors" onclick="document.getElementById('new-address-form').classList.toggle('hidden')" type="button">
+<span class="material-symbols-outlined text-[20px] text-tertiary">add_circle</span>
+<span>Add a new delivery address</span>
+</button>
+<form class="hidden mt-space-md flex flex-col gap-space-md pt-space-md bg-surface-container-lowest p-space-lg rounded-xl" id="new-address-form">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Full name (First and Last name)</label>
+<input class="w-full bg-surface-container-lowest px-space-md py-space-xs rounded font-body-md text-body-md text-on-surface outline-none focus:bg-surface" placeholder="e.g. Rahul Sharma" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Mobile number</label>
+<input class="w-full bg-surface-container-lowest px-space-md py-space-xs rounded font-body-md text-body-md text-on-surface outline-none focus:bg-surface" placeholder="10-digit mobile number" type="tel"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Pincode</label>
+<input class="w-full bg-surface-container-lowest px-space-md py-space-xs rounded font-body-md text-body-md text-on-surface outline-none focus:bg-surface" maxlength="6" placeholder="6 digits [0-9] PIN code" type="text"/>
+</div>
+<div class="md:col-span-2">
+<label class="block font-label-md text-label-md text-on-surface mb-1">Flat, House no., Building, Company, Apartment</label>
+<input class="w-full bg-surface-container-lowest px-space-md py-space-xs rounded font-body-md text-body-md text-on-surface outline-none focus:bg-surface" placeholder="Flat 402, Wing B" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Area, Street, Sector, Village</label>
+<input class="w-full bg-surface-container-lowest px-space-md py-space-xs rounded font-body-md text-body-md text-on-surface outline-none focus:bg-surface" placeholder="Navapur Road, Boisar West" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Landmark</label>
+<input class="w-full bg-surface-container-lowest px-space-md py-space-xs rounded font-body-md text-body-md text-on-surface outline-none focus:bg-surface" placeholder="E.g. near Apollo pharmacy" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">Town/City</label>
+<input class="w-full bg-surface-container-lowest px-space-md py-space-xs rounded font-body-md text-body-md text-on-surface outline-none focus:bg-surface" placeholder="Palghar / Boisar" type="text"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1">State</label>
+<select class="w-full bg-surface-container-lowest px-space-md py-space-xs rounded font-body-md text-body-md text-on-surface outline-none focus:bg-surface">
+<option selected="">MAHARASHTRA</option>
+<option>DELHI</option>
+<option>KARNATAKA</option>
+<option>GUJARAT</option>
+<option>TAMIL NADU</option>
+<option>TELANGANA</option>
+<option>UTTAR PRADESH</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-space-xs pt-1">
+<input class="w-4 h-4 accent-primary" id="make_default" type="checkbox"/>
+<label class="font-body-md text-body-md text-on-surface cursor-pointer" for="make_default">Use as my default delivery address</label>
+</div>
+<div class="pt-2 flex gap-space-md">
+<button class="px-space-lg py-space-sm bg-tertiary-fixed text-on-tertiary-fixed font-label-md text-label-md rounded-full hover:bg-tertiary-fixed-dim transition-colors" type="button">
+                    Save and Deliver Here
+                  </button>
+<button class="px-space-md py-space-sm bg-surface-container-high text-on-surface font-label-md text-label-md rounded-full hover:bg-surface-variant transition-colors" onclick="document.getElementById('new-address-form').classList.add('hidden')" type="button">
+                    Cancel
+                  </button>
+</div>
+</form>
+</div>
+</div>
+</section>
+<!-- STEP 2: Indian Payment Options -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden" id="step-payment">
+<div class="bg-surface-container-low px-space-lg py-space-md flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-lg text-headline-lg text-primary">2</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Select a payment method</h2>
+</div>
+<span class="flex items-center gap-1 font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[16px]">lock</span> 100% Secure
+            </span>
+</div>
+<div class="p-space-lg flex flex-col gap-space-md">
+<!-- PAYMENT OPTION 1: UPI / QR (Default Selected) -->
+<div class="rounded-xl bg-surface-container-low p-space-md">
+<label class="flex items-start gap-space-md cursor-pointer">
+<input checked="" class="mt-1 w-4 h-4 accent-primary" name="payment_method" onchange="togglePaymentSelection('upi')" type="radio" value="upi"/>
+<div class="flex-1">
+<div class="flex items-center justify-between flex-wrap gap-space-xs">
+<span class="font-headline-md text-headline-md text-on-surface">UPI / QR (Google Pay, PhonePe, Paytm, BHIM)</span>
+<span class="text-label-sm font-label-sm bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded">Fastest</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Pay directly via any UPI app or scan the dynamic QR code.</p>
+<div class="mt-space-md flex flex-col gap-space-sm pl-0" id="payment-upi-details">
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-sm max-w-lg">
+<div class="relative flex-1">
+<input class="w-full bg-surface-container-lowest px-space-md py-space-xs rounded font-body-md text-body-md text-on-surface outline-none focus:bg-surface" placeholder="Enter UPI ID (e.g. rahul@okaxis)" type="text"/>
+</div>
+<button class="px-space-md py-space-xs bg-surface-container-high hover:bg-surface-variant text-on-surface font-label-md text-label-md rounded whitespace-nowrap transition-colors" type="button">
+                        Verify ID
+                      </button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-tertiary">qr_code_2</span>
+                      Scan QR code on next page or approve notification request on your phone.
+                    </p>
+</div>
+</div>
+</label>
+</div>
+<!-- PAYMENT OPTION 2: Credit / Debit Card -->
+<div class="rounded-xl bg-surface p-space-md hover:bg-surface-container-low transition-colors">
+<label class="flex items-start gap-space-md cursor-pointer">
+<input class="mt-1 w-4 h-4 accent-primary" name="payment_method" onchange="togglePaymentSelection('card')" type="radio" value="card"/>
+<div class="flex-1">
+<div class="flex items-center justify-between flex-wrap gap-space-xs">
+<span class="font-headline-md text-headline-md text-on-surface">Credit or Debit Card</span>
+<div class="flex items-center gap-1.5 opacity-80 text-on-surface-variant font-label-sm text-label-sm">
+<span class="bg-surface-container-highest px-1.5 py-0.5 rounded text-[10px] font-bold">VISA</span>
+<span class="bg-surface-container-highest px-1.5 py-0.5 rounded text-[10px] font-bold">Mastercard</span>
+<span class="bg-surface-container-highest px-1.5 py-0.5 rounded text-[10px] font-bold text-tertiary">RuPay</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Bharat.in accepts all major credit and debit cards.</p>
+<div class="hidden mt-space-md flex flex-col gap-space-md max-w-lg bg-surface-container-lowest p-space-md rounded-lg" id="payment-card-details">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Card number</label>
+<input class="w-full bg-surface-container-low px-space-md py-space-xs rounded font-body-md text-body-md text-on-surface outline-none focus:bg-surface-container" placeholder="1234 5678 9012 3456" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-space-md">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Name on card</label>
+<input class="w-full bg-surface-container-low px-space-md py-space-xs rounded font-body-md text-body-md text-on-surface outline-none focus:bg-surface-container" placeholder="Rahul Sharma" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-space-xs">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">Expiry</label>
+<input class="w-full bg-surface-container-low px-space-xs py-space-xs text-center rounded font-body-md text-body-md text-on-surface outline-none focus:bg-surface-container" maxlength="5" placeholder="MM/YY" type="text"/>
+</div>
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface mb-1">CVV</label>
+<input class="w-full bg-surface-container-low px-space-xs py-space-xs text-center rounded font-body-md text-body-md text-on-surface outline-none focus:bg-surface-container" maxlength="4" placeholder="•••" type="password"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+</label>
+</div>
+<!-- PAYMENT OPTION 3: Net Banking -->
+<div class="rounded-xl bg-surface p-space-md hover:bg-surface-container-low transition-colors">
+<label class="flex items-start gap-space-md cursor-pointer">
+<input class="mt-1 w-4 h-4 accent-primary" name="payment_method" onchange="togglePaymentSelection('netbanking')" type="radio" value="netbanking"/>
+<div class="flex-1">
+<span class="font-headline-md text-headline-md text-on-surface">Net Banking</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">All major Indian banks supported.</p>
+<div class="hidden mt-space-md max-w-md" id="payment-netbanking-details">
+<select class="w-full bg-surface-container-lowest px-space-md py-space-xs rounded font-body-md text-body-md text-on-surface outline-none">
+<option>State Bank of India (SBI)</option>
+<option>HDFC Bank</option>
+<option>ICICI Bank</option>
+<option>Axis Bank</option>
+<option>Kotak Mahindra Bank</option>
+<option>Punjab National Bank</option>
+</select>
+</div>
+</div>
+</label>
+</div>
+<!-- PAYMENT OPTION 4: Cash on Delivery -->
+<div class="rounded-xl bg-surface p-space-md hover:bg-surface-container-low transition-colors">
+<label class="flex items-start gap-space-md cursor-pointer">
+<input class="mt-1 w-4 h-4 accent-primary" name="payment_method" onchange="togglePaymentSelection('cod')" type="radio" value="cod"/>
+<div class="flex-1">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-md text-headline-md text-on-surface">Cash on Delivery (COD) / Pay on Delivery</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                    Pay with Cash, UPI, or Cards when package arrives. Doorstep verification code required.
+                  </p>
+<p class="font-label-sm text-label-sm text-tertiary mt-1">
+                    Standard ₹7 handling fee waived for Prime.
+                  </p>
+</div>
+</label>
+</div>
+<!-- Confirm Payment Button -->
+<div class="pt-space-xs">
+<button class="px-space-xl py-space-sm rounded-full font-label-md text-label-md bg-tertiary-fixed text-on-tertiary-fixed shadow-sm hover:bg-tertiary-fixed-dim transition-colors" type="button">
+                Use this payment method
+              </button>
+</div>
+</div>
+</section>
+<!-- STEP 3: Review Items & Delivery -->
+<section class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden" id="step-review">
+<div class="bg-surface-container-low px-space-lg py-space-md flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-lg text-headline-lg text-primary">3</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Review items and delivery</h2>
+</div>
+<span class="font-label-md text-label-md text-secondary">2 Items</span>
+</div>
+<div class="p-space-lg flex flex-col gap-space-lg">
+<!-- Guaranteed Delivery Callout Banner -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined text-[24px]">schedule_send</span>
+</div>
+<div>
+<p class="font-headline-md text-headline-md text-on-surface">
+                  Guaranteed delivery: Tomorrow by 9 PM
+                </p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Eligible for FREE One-Day Delivery with Bharat Prime membership.
+                </p>
+</div>
+</div>
+<!-- Item 1: Headphones -->
+<div class="flex flex-col sm:flex-row gap-space-md items-start pb-space-md">
+<div class="w-24 h-24 sm:w-28 sm:h-28 rounded-xl bg-surface-container-low overflow-hidden flex-shrink-0 flex items-center justify-center p-2">
+<img class="w-full h-full object-contain" data-alt="Matte black wireless over-ear noise cancelling headphones resting on a minimalist clean white background, sleek studio catalog lighting with soft reflections." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBheTkbPGMJZPqUBCuQNRqMTWPSYyrkge9Vcq1NNjEWGsaEgq16cnOUkyrBkdp5_lHfLoodj-77SVddmAo_FMi6YM-HZFOLHP0lHj3LYRkK8Ec-Oi5kA7YZxlDtJEfqdVwP97u3fyq7yT9wHChP6UEKd5uHX1OZnjJ-F7Ni3LsfwYJ_8IVxJCJm5aGm5-jG7yFjbJB0EFqxjxtibm-YEC9VNvEdYzN_s26W_FWUZeI"/>
+</div>
+<div class="flex-1 flex flex-col gap-0.5">
+<h3 class="font-headline-md text-headline-md text-on-surface line-clamp-2">
+                  Wireless ANC Over-Ear Headphones with 40H Playtime, Deep Bass, Quad Microphones & Low Latency
+                </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Sold by: <span class="text-on-surface font-label-md">RetailVentures India</span> (4.8 ★) | In Stock
+                </p>
+<div class="flex items-center gap-space-md mt-1">
+<span class="font-label-price-md text-label-price-md text-on-surface">₹3,499.00</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant line-through">₹7,999.00</span>
+<span class="font-label-sm text-label-sm text-error bg-error-container text-on-error-container px-1.5 py-0.5 rounded">56% off</span>
+</div>
+<div class="flex items-center gap-space-lg mt-2">
+<div class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface">
+<span>Qty:</span>
+<select class="bg-surface-container-low rounded px-2 py-0.5 text-on-surface text-label-sm outline-none">
+<option selected="">1</option>
+<option>2</option>
+<option>3</option>
+</select>
+</div>
+<span class="text-outline-variant">•</span>
+<button class="font-body-sm text-body-sm text-secondary hover:underline" type="button">Delete</button>
+<span class="text-outline-variant">•</span>
+<button class="font-body-sm text-body-sm text-secondary hover:underline" type="button">Save for later</button>
+</div>
+</div>
+</div>
+<!-- Item 2: Water Bottle -->
+<div class="flex flex-col sm:flex-row gap-space-md items-start">
+<div class="w-24 h-24 sm:w-28 sm:h-28 rounded-xl bg-surface-container-low overflow-hidden flex-shrink-0 flex items-center justify-center p-2">
+<img class="w-full h-full object-contain" data-alt="Brushed stainless steel vacuum insulated sports water bottle 1000ml in cobalt blue finish, pristine studio product photography on clean light backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2ohYAGA5nrUHyZs1xIqm1jf1SEXcx3EJ_GVLSR0EhJg2JuFOAEzFjCO3rY-_XFre2BekqqdkjGWbPFRV-aPmOK0riD6ixrC_pwkK2MZrWEIWHnMgSI1uh7D-pfBmDc7tVjq_zARkxXensVI-G3nnUjNk9FsAHQkYo86oh7NqNzXzeJ1qc-ookDPozSvo9EPimtcoaHUmnA0q_LokMtpstKqePBtlShYF1gssTeLQ"/>
+</div>
+<div class="flex-1 flex flex-col gap-0.5">
+<h3 class="font-headline-md text-headline-md text-on-surface line-clamp-2">
+                  Vacuum Insulated Stainless Steel Water Bottle (1 Litre), 24h Cold & 12h Hot, Leak-Proof Lid
+                </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Sold by: <span class="text-on-surface font-label-md">Cloudtail Bharat</span> (4.6 ★) | In Stock
+                </p>
+<div class="flex items-center gap-space-md mt-1">
+<span class="font-label-price-md text-label-price-md text-on-surface">₹699.00</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant line-through">₹1,299.00</span>
+<span class="font-label-sm text-label-sm text-error bg-error-container text-on-error-container px-1.5 py-0.5 rounded">46% off</span>
+</div>
+<div class="flex items-center gap-space-lg mt-2">
+<div class="flex items-center gap-space-xs font-body-sm text-body-sm text-on-surface">
+<span>Qty:</span>
+<select class="bg-surface-container-low rounded px-2 py-0.5 text-on-surface text-label-sm outline-none">
+<option selected="">1</option>
+<option>2</option>
+</select>
+</div>
+<span class="text-outline-variant">•</span>
+<button class="font-body-sm text-body-sm text-secondary hover:underline" type="button">Delete</button>
+<span class="text-outline-variant">•</span>
+<button class="font-body-sm text-body-sm text-secondary hover:underline" type="button">Save for later</button>
+</div>
+</div>
+</div>
+<!-- Delivery Instructions Collapsible / Toggle -->
+<div class="bg-surface-container-low p-space-md rounded-xl">
+<button class="flex items-center justify-between w-full text-left" onclick="document.getElementById('instructions-container').classList.toggle('hidden')" type="button">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">info</span>
+<span class="font-label-md text-label-md text-on-surface">Add delivery instructions: House, Apartment, Security gate</span>
+</div>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">expand_more</span>
+</button>
+<div class="hidden mt-space-md flex flex-col gap-space-sm pt-space-xs" id="instructions-container">
+<textarea class="w-full bg-surface-container-lowest p-space-sm rounded font-body-md text-body-md text-on-surface outline-none" placeholder="e.g. Leave package with building security guard Mr. Yadav, or call on arrival." rows="2"></textarea>
+<div class="flex items-center gap-space-md flex-wrap text-label-sm font-label-sm text-on-surface-variant">
+<label class="flex items-center gap-1 cursor-pointer">
+<input class="accent-primary" type="checkbox"/> Delivery during daytime only
+                  </label>
+<label class="flex items-center gap-1 cursor-pointer">
+<input class="accent-primary" type="checkbox"/> Call before delivery
+                  </label>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- RIGHT COLUMN: Sticky Order Summary (4 Cols / approx 30%) -->
+<aside class="lg:col-span-4 sticky top-20 flex flex-col gap-space-md">
+<!-- Sticky Order Summary Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-lg flex flex-col gap-space-md">
+<!-- Primary CTA Button -->
+<button class="w-full py-space-md bg-tertiary-fixed text-on-tertiary-fixed font-headline-md text-headline-md rounded-xl shadow-sm hover:bg-tertiary-fixed-dim transition-colors text-center" type="button">
+            Place your order
+          </button>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center px-space-xs">
+            By placing your order, you agree to Bharat.in's <a class="text-secondary hover:underline" href="#">Conditions of Use</a> and <a class="text-secondary hover:underline" href="#">Privacy Notice</a>.
+          </p>
+<!-- Savings Callout Pill -->
+<div class="bg-surface-container-low p-space-sm rounded-lg flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[20px]">savings</span>
+<div class="flex-1">
+<span class="font-label-md text-label-md text-on-surface">Your Savings: ₹4,100.00</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">49% off M.R.P. plus Free Delivery!</p>
+</div>
+</div>
+<!-- Order Summary Breakdown -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col gap-space-sm">
+<h3 class="font-headline-md text-headline-md text-on-surface pb-1">Order Summary</h3>
+<div class="flex items-center justify-between font-body-md text-body-md text-on-surface">
+<span>Items (2):</span>
+<span>₹4,198.00</span>
+</div>
+<div class="flex items-center justify-between font-body-md text-body-md text-on-surface">
+<span>Delivery & Handling:</span>
+<span>₹40.00</span>
+</div>
+<div class="flex items-center justify-between font-body-md text-body-md text-on-surface">
+<span>Promotion / Free Delivery:</span>
+<span class="font-label-md">-₹40.00</span>
+</div>
+<div class="flex items-center justify-between font-body-md text-body-md text-on-surface">
+<span>Prime Savings:</span>
+<span>-₹0.00</span>
+</div>
+<!-- Grand Total Block -->
+<div class="pt-space-sm mt-space-xs flex items-baseline justify-between bg-surface-container p-space-sm rounded-lg">
+<div>
+<span class="font-headline-lg text-headline-lg text-on-surface">Order Total:</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Inclusive of all taxes</p>
+</div>
+<span class="font-label-price-lg text-label-price-lg text-error font-bold">₹4,198.00</span>
+</div>
+</div>
+<!-- Promo Code Accordion / Input -->
+<div class="bg-surface-container-low p-space-md rounded-xl">
+<div class="flex items-center gap-space-xs">
+<input class="flex-1 bg-surface-container-lowest px-space-md py-space-xs rounded text-body-md font-body-md text-on-surface outline-none uppercase" placeholder="Enter Gift Card or Promo Code" type="text"/>
+<button class="px-space-md py-space-xs bg-surface-container-high hover:bg-surface-variant font-label-md text-label-md text-on-surface rounded transition-colors" type="button">
+                Apply
+              </button>
+</div>
+</div>
+</div>
+<!-- Trust and Safety Guarantee Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[22px]">verified</span>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">100% Purchase Protection</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                Genuine products, secure payments, and easy 7-day doorstep replacement.
+              </p>
+</div>
+</div>
+<div class="flex items-start gap-space-sm pt-space-xs">
+<span class="material-symbols-outlined text-secondary text-[22px]">lock_reset</span>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Safe and Secure Payments</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                Encrypted via 256-bit SSL protocol compliant with RBI guidelines.
+              </p>
+</div>
+</div>
+</div>
+<!-- Visual Trust Banner / SVG badge representation -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex items-center justify-between text-on-surface-variant">
+<div class="flex items-center gap-space-xs">
+<svg class="w-5 h-5 text-tertiary" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"></path>
+</svg>
+<span class="font-label-sm text-label-sm font-bold">Bharat A-to-z Guarantee</span>
+</div>
+<span class="font-label-sm text-label-sm">Learn more</span>
+</div>
+</aside>
+</div>
+</div>
+<!-- Inline Script for Utilitarian Step Interactivity -->
+<script>
+    function togglePaymentSelection(mode) {
+      const upiBox = document.getElementById('payment-upi-details');
+      const cardBox = document.getElementById('payment-card-details');
+      const nbBox = document.getElementById('payment-netbanking-details');
+
+      if (upiBox) upiBox.classList.add('hidden');
+      if (cardBox) cardBox.classList.add('hidden');
+      if (nbBox) nbBox.classList.add('hidden');
+
+      if (mode === 'upi' && upiBox) upiBox.classList.remove('hidden');
+      if (mode === 'card' && cardBox) cardBox.classList.remove('hidden');
+      if (mode === 'netbanking' && nbBox) nbBox.classList.remove('hidden');
+    }
+
+    function toggleAddressDetails() {
+      const form = document.getElementById('new-address-form');
+      if (form) {
+        form.classList.toggle('hidden');
+      }
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-low py-space-xl"><div class="max-w-[1500px] mx-auto px-margin flex flex-col items-center justify-center gap-space-sm text-center"><nav class="flex flex-wrap items-center justify-center gap-space-lg" data-active-classes="bg-surface-container text-on-surface font-bold rounded-lg"><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" data-path="conditions-of-use" href="#">Conditions of Use</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" data-path="privacy-notice" href="#">Privacy Notice</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" data-path="interest-based-ads" href="#">Interest-Based Ads</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface" data-path="help" href="#">Help & Support</a></nav><div class="font-body-sm text-body-sm text-on-surface-variant">© 1996–2024, Bharat.in, Inc. or its affiliates. All rights reserved.</div></div></footer></body></html>

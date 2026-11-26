@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: consumer-commerce-cloud-guard
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: AWS_DEFAULT_REGION
+        value: ap-southeast-2
+      - key: BEDROCK_MODEL_ID
+        value: global.anthropic.claude-haiku-4-5-20251001-v1:0
+      - key: BEDROCK_GUARDRAIL_ID
+        value: 1z48cdo2pkw8
+      - key: BEDROCK_GUARDRAIL_VERSION
+        value: DRAFT
+      - key: AWS_BEARER_TOKEN_BEDROCK
+        sync: false
