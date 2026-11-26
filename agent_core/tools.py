@@ -208,6 +208,120 @@ class CloudTools:
         return ToolResult("ALLOWED", "\n".join(lines), "Read-only anonymized DB analytics (PII excluded).")
 
     @staticmethod
+    def get_live_telemetry(limit: int = 5) -> ToolResult:
+        """Read real Vercel/Render traffic & CPU telemetry from Neon PostgreSQL."""
+        try:
+            from backend.db import fetch_live_telemetry
+
+            data = fetch_live_telemetry(limit=limit)
+        except Exception as exc:
+            return ToolResult("ALLOWED", f"Telemetry unavailable: {exc}", "Read-only telemetry check.")
+
+        if not data.get("connected"):
+            return ToolResult("ALLOWED", "Neon DB is not connected.", "Read-only telemetry check.")
+
+        lines = [
+            "Live Render + Vercel Telemetry (Neon DB `cloud_telemetry`):",
+            f"  - Total Recorded Hits: {data['total_hits']} | Avg CPU: {data['avg_cpu']}%",
+        ]
+        for s in data["by_server"]:
+            lines.append(f"  - {s['server']}: {s['hits']} hits (avg CPU {s['avg_cpu']}%)")
+        for r in data["recent"][:3]:
+            lines.append(f"  - Recent: [{r['server']}] {r['page']} ({r['action']}) @ {r['cpu']}% CPU")
+        return ToolResult("ALLOWED", "\n".join(lines), "Read-only live telemetry check.")
+
+    @staticmethod
+    def manage_product_inventory(sku: str, action: str = "inspect", amount: int = 0) -> ToolResult:
+        """Inspect or safely restock a real product in Neon shop_products."""
+        act = action.strip().lower()
+        if act in {"delete", "drop", "set_price_zero", "wipe"}:
+            return ToolResult(
+                "BLOCKED",
+                f"Layer 3 Policy violation: '{act}' on product '{sku}' is forbidden.",
+                "Product deletion and price tampering are blocked.",
+            )
+        if act == "restock" and (amount < 1 or amount > 50):
+            return ToolResult(
+                "BLOCKED",
+                f"Layer 3 Policy violation: restock amount ({amount}) must be between 1 and 50 units.",
+                "Bulk inventory mutation requires approval.",
+            )
+        try:
+            from backend.db import query_or_update_product
+
+            res = query_or_update_product(sku, action=act, amount=amount)
+        except Exception as exc:
+            return ToolResult("ALLOWED", f"Product query error: {exc}", "Inventory lookup.")
+
+        if not res.get("connected"):
+            return ToolResult("ALLOWED", "Neon DB is not connected.", "Inventory lookup.")
+        if not res.get("found"):
+            return ToolResult("ALLOWED", f"Product SKU '{sku}' not found in shop_products.", "Inventory lookup.")
+
+        msg = (
+            f"Product {res['sku']} ({res['title']}):\n"
+            f"  - Category: {res['category']}\n"
+            f"  - Price: INR {res['price_inr']:,.2f}\n"
+            f"  - Stock: {res['stock']} units"
+        )
+        return ToolResult("ALLOWED", msg, f"Scoped inventory '{act}' on '{res['sku']}'.")
+
+    @staticmethod
+    def manage_order_status(order_code: str, action: str = "inspect", new_status: str = "") -> ToolResult:
+        """Inspect or safely update a single order in Neon shop_orders (zero PII)."""
+        act = action.strip().lower()
+        if act in {"delete", "drop", "bulk_cancel", "export_pii"} or "*" in order_code or "all" in order_code.lower():
+            return ToolResult(
+                "BLOCKED",
+                f"Layer 3 Policy violation: '{act}' / bulk order operation on '{order_code}' is forbidden.",
+                "Bulk order mutations and PII export are blocked.",
+            )
+        allowed_statuses = {"processing", "shipped", "delivered"}
+        if act == "update_status" and new_status.strip().lower() not in allowed_statuses:
+            return ToolResult(
+                "BLOCKED",
+                f"Layer 3 Policy violation: status '{new_status}' is not allowed. Allowed: {sorted(allowed_statuses)}.",
+                "Restricted order status transition.",
+            )
+        try:
+            from backend.db import query_or_update_order
+
+            res = query_or_update_order(order_code, action=act, new_status=new_status)
+        except Exception as exc:
+            return ToolResult("ALLOWED", f"Order query error: {exc}", "Order lookup.")
+
+        if not res.get("connected"):
+            return ToolResult("ALLOWED", "Neon DB is not connected.", "Order lookup.")
+        if not res.get("found"):
+            return ToolResult("ALLOWED", f"Order '{order_code}' not found in shop_orders.", "Order lookup.")
+
+        msg = (
+            f"Order {res['order_code']} (Zero PII):\n"
+            f"  - Status: {res['status']}\n"
+            f"  - Quantity: {res['quantity']} | Total: INR {res['total_inr']:,.2f}\n"
+            f"  - Payment Method: {res['payment_method']}"
+        )
+        return ToolResult("ALLOWED", msg, f"Scoped order '{act}' on '{res['order_code']}'.")
+
+    @staticmethod
+    def get_security_audit_logs(limit: int = 8) -> ToolResult:
+        """Read recent security and agent audit events from Neon PostgreSQL."""
+        try:
+            from backend.db import fetch_recent_audit_logs
+
+            data = fetch_recent_audit_logs(limit=limit)
+        except Exception as exc:
+            return ToolResult("ALLOWED", f"Audit log query error: {exc}", "Read-only audit lookup.")
+
+        if not data.get("connected"):
+            return ToolResult("ALLOWED", "Neon DB is not connected.", "Read-only audit lookup.")
+
+        lines = [f"Recent Security Audit Logs (latest {len(data['logs'])}):"]
+        for row in data["logs"]:
+            lines.append(f"  - [{row['status']}] ({row['tool']}) {row['prompt'][:60]}")
+        return ToolResult("ALLOWED", "\n".join(lines), "Read-only security audit inspection.")
+
+    @staticmethod
     def manage_finops_controls(action: str) -> ToolResult:
         """Manage billing alerts or spend caps (disabling/removing is blocked by Layer 3 policy)."""
         return ToolResult(

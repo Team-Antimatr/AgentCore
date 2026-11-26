@@ -143,6 +143,64 @@ TOOL_CONFIG = {
                 },
             }
         },
+        {
+            "toolSpec": {
+                "name": "get_live_telemetry",
+                "description": "Fetch real live traffic hits and server CPU telemetry recorded from Vercel + Render in Neon PostgreSQL.",
+                "inputSchema": {
+                    "json": {
+                        "type": "object",
+                        "properties": {"limit": {"type": "integer", "description": "Recent hits count (default 5)"}},
+                    }
+                },
+            }
+        },
+        {
+            "toolSpec": {
+                "name": "manage_product_inventory",
+                "description": "Inspect or restock a Bharat.in product by SKU (e.g., BHR-0001) in Neon PostgreSQL.",
+                "inputSchema": {
+                    "json": {
+                        "type": "object",
+                        "properties": {
+                            "sku": {"type": "string", "description": "Product SKU like BHR-0001"},
+                            "action": {"type": "string", "description": "inspect, restock, delete, or set_price_zero"},
+                            "amount": {"type": "integer", "description": "Restock units (for restock)"},
+                        },
+                        "required": ["sku"],
+                    }
+                },
+            }
+        },
+        {
+            "toolSpec": {
+                "name": "manage_order_status",
+                "description": "Inspect or update a single Bharat.in order by order_code (e.g., ORD-2026-10001) without exposing customer PII.",
+                "inputSchema": {
+                    "json": {
+                        "type": "object",
+                        "properties": {
+                            "order_code": {"type": "string", "description": "Order code like ORD-2026-10001"},
+                            "action": {"type": "string", "description": "inspect or update_status"},
+                            "new_status": {"type": "string", "description": "processing, shipped, or delivered"},
+                        },
+                        "required": ["order_code"],
+                    }
+                },
+            }
+        },
+        {
+            "toolSpec": {
+                "name": "get_security_audit_logs",
+                "description": "Fetch recent security and action audit logs (ALLOWED, ESCALATED, BLOCKED) from Neon PostgreSQL.",
+                "inputSchema": {
+                    "json": {
+                        "type": "object",
+                        "properties": {"limit": {"type": "integer", "description": "Number of log entries (default 8)"}},
+                    }
+                },
+            }
+        },
     ]
 }
 
@@ -209,6 +267,22 @@ class BedrockBrain:
                 name_starts_with=tool_input.get("name_starts_with"),
                 name_ends_with=tool_input.get("name_ends_with"),
             )
+        if name == "get_live_telemetry":
+            return tools.get_live_telemetry(limit=int(tool_input.get("limit", 5)))
+        if name == "manage_product_inventory":
+            return tools.manage_product_inventory(
+                sku=tool_input.get("sku", ""),
+                action=tool_input.get("action", "inspect"),
+                amount=int(tool_input.get("amount", 0)),
+            )
+        if name == "manage_order_status":
+            return tools.manage_order_status(
+                order_code=tool_input.get("order_code", ""),
+                action=tool_input.get("action", "inspect"),
+                new_status=tool_input.get("new_status", ""),
+            )
+        if name == "get_security_audit_logs":
+            return tools.get_security_audit_logs(limit=int(tool_input.get("limit", 8)))
         return ToolResult("BLOCKED", f"Unknown tool '{name}'.", "Unknown tool blocked.")
 
     def execute(self, prompt: str, tools: CloudTools, max_turns: int = 5) -> BedrockExecution:

@@ -137,6 +137,21 @@ class TestOnlineShoppingCloudGuardAgent(unittest.TestCase):
         self.assertEqual(r2.status, "BLOCKED")
         self.assertIn("AVAILABILITY_SABOTAGE", r2.answer)
 
+    def test_real_shop_tools_and_layer3_blocks(self) -> None:
+        p_ok = self.agent.tools.manage_product_inventory("BHR-0001", action="inspect")
+        self.assertEqual(p_ok.status, "ALLOWED")
+        self.assertIn("BHR-0001", p_ok.output)
+
+        p_blk = self.agent.tools.manage_product_inventory("BHR-0001", action="set_price_zero")
+        self.assertEqual(p_blk.status, "BLOCKED")
+
+        o_ok = self.agent.tools.manage_order_status("ORD-2026-10001", action="inspect")
+        self.assertEqual(o_ok.status, "ALLOWED")
+        self.assertIn("ORD-2026-10001", o_ok.output)
+
+        o_blk = self.agent.tools.manage_order_status("*", action="bulk_cancel")
+        self.assertEqual(o_blk.status, "BLOCKED")
+
     def test_audit_log_records_every_request(self) -> None:
         self.agent.handle("Check the CPU utilization and health status of staging-api-server-01.")
         self.agent.handle("Drop the prod-users-db database and purge all automated backups.")

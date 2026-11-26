@@ -199,3 +199,132 @@ def fetch_shop_analytics(
                 }
 
             return result
+
+
+def fetch_live_telemetry(limit: int = 10) -> dict:
+    """Return real cloud_telemetry stats and recent hits from Neon PostgreSQL."""
+    with get_conn() as conn:
+        if conn is None:
+            return {"connected": False}
+        with conn.cursor() as cur:
+            cur.execute("SELECT COUNT(*), COALESCE(AVG(cpu_percent), 0) FROM cloud_telemetry")
+            total_hits, avg_cpu = cur.fetchone()
+            cur.execute(
+                "SELECT server_name, COUNT(*), ROUND(AVG(cpu_percent), 2) "
+                "FROM cloud_telemetry GROUP BY server_name ORDER BY COUNT(*) DESC"
+            )
+            by_server = [
+                {"server": r[0], "hits": r[1], "avg_cpu": float(r[2])} for r in cur.fetchall()
+            ]
+            cur.execute(
+                "SELECT server_name, page, action, cpu_percent, created_at "
+                "FROM cloud_telemetry ORDER BY id DESC LIMIT %s",
+                (limit,),
+            )
+            recent = [
+                {
+                    "server": r[0],
+                    "page": r[1],
+                    "action": r[2],
+                    "cpu": float(r[3]),
+                    "at": r[4].isoformat() if r[4] else "",
+                }
+                for r in cur.fetchall()
+            ]
+            return {
+                "connected": True,
+                "total_hits": total_hits,
+                "avg_cpu": round(float(avg_cpu), 2),
+                "by_server": by_server,
+                "recent": recent,
+            }
+
+
+def query_or_update_product(sku: str, action: str = "inspect", amount: int = 0) -> dict:
+    """Inspect or restock a real product in Neon shop_products (no price/delete tampering)."""
+    with get_conn() as conn:
+        if conn is None:
+            return {"connected": False}
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT sku, title, category, price_inr, stock FROM shop_products WHERE UPPER(sku) = UPPER(%s)",
+                (sku.strip(),),
+            )
+            row = cur.fetchone()
+            if not row:
+                return {"connected": True, "found": False}
+            if action == "restock":
+                cur.execute(
+                    "UPDATE shop_products SET stock = stock + %s WHERE UPPER(sku) = UPPER(%s) "
+                    "RETURNING sku, title, category, price_inr, stock",
+                    (amount, sku.strip()),
+                )
+                row = cur.fetchone()
+                conn.commit()
+            return {
+                "connected": True,
+                "found": True,
+                "sku": row[0],
+                "title": row[1],
+                "category": row[2],
+                "price_inr": float(row[3]),
+                "stock": row[4],
+            }
+
+
+def query_or_update_order(order_code: str, action: str = "inspect", new_status: str = "") -> dict:
+    """Inspect or update a single real order in Neon shop_orders (zero PII returned)."""
+    with get_conn() as conn:
+        if conn is None:
+            return {"connected": False}
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT order_code, quantity, total_inr, status, payment_method, created_at "
+                "FROM shop_orders WHERE UPPER(order_code) = UPPER(%s)",
+                (order_code.strip(),),
+            )
+            row = cur.fetchone()
+            if not row:
+                return {"connected": True, "found": False}
+            if action == "update_status" and new_status:
+                cur.execute(
+                    "UPDATE shop_orders SET status = %s WHERE UPPER(order_code) = UPPER(%s) "
+                    "RETURNING order_code, quantity, total_inr, status, payment_method, created_at",
+                    (new_status.strip().lower(), order_code.strip()),
+                )
+                row = cur.fetchone()
+                conn.commit()
+            return {
+                "connected": True,
+                "found": True,
+                "order_code": row[0],
+                "quantity": row[1],
+                "total_inr": float(row[2]),
+                "status": row[3],
+                "payment_method": row[4],
+                "created_at": row[5].isoformat() if row[5] else "",
+            }
+
+
+def fetch_recent_audit_logs(limit: int = 10) -> dict:
+    """Return recent security/action audit logs from Neon PostgreSQL."""
+    with get_conn() as conn:
+        if conn is None:
+            return {"connected": False}
+        with conn.cursor() as cur:
+            cur.execute(
+                "SELECT prompt, guardrail_category, tool_used, status, created_at "
+                "FROM agent_audit_logs ORDER BY id DESC LIMIT %s",
+                (limit,),
+            )
+            rows = [
+                {
+                    "prompt": r[0],
+                    "category": r[1],
+                    "tool": r[2],
+                    "status": r[3],
+                    "at": r[4].isoformat() if r[4] else "",
+                }
+                for r in cur.fetchall()
+            ]
+            return {"connected": True, "logs": rows}
